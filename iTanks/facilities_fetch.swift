@@ -41,7 +41,9 @@ struct twoContentView: View {
                         VStack(alignment: .leading) {
                             Text(facility.facility_name)
                                 .font(.headline)
-                            Text(facility.division_name)
+                            Text(facility.facility_name)
+                                .font(.headline);
+                            Text(facility.property_id)
                                 .font(.headline)                        }
                     }
                 }
