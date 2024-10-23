@@ -62,7 +62,7 @@ struct TanksContentView: View {
 
     // Fetch tanks data
     func tanksFetch() async {
-        // Creating the URL object
+
         guard let url = URL(string: "https://tanks-api.wolfeydev.com/tanks") else {
             errorMessage = "Invalid URL"
             return
@@ -75,24 +75,24 @@ struct TanksContentView: View {
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         do {
-            // Convert the payload to JSON
+
             let jsonData = try JSONEncoder().encode(payload)
             req.httpBody = jsonData
 
             let (data, response) = try await URLSession.shared.data(for: req)
 
-            // Checking for a valid HTTP response
+
             if let httpResponse = response as? HTTPURLResponse {
                 print("Response status code: \(httpResponse.statusCode)")
             }
 
-            // Decode the JSON data into TankData
+      
             let decodedData = try JSONDecoder().decode(TankData.self, from: data)
 
-            // Update the tanks state directly
+        
             tanks = decodedData.tanks
         } catch {
-            // Handling error
+            
             errorMessage = error.localizedDescription
             print("Error: \(error.localizedDescription)")
         }
