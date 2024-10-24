@@ -50,14 +50,12 @@ struct twoContentView: View {
                         .background(Color.gray.opacity(0.1))
                         .cornerRadius(8)
                         
-                        List(facilities.filter { selectedDivision.isEmpty || $0.division_name == selectedDivision }) { facility in
-                            VStack(alignment: .leading) {
-                                Text(facility.facility_name)
-                                    .font(.headline)
-                                Text(facility.property_id)
-                                    .font(.subheadline)
+                        Menu("Division Name") {
+                            ForEach(divisionNames, id: \.self) {
+                                division in Text(division).tag(division)
                             }
                         }
+                        
                     }
                 }
             }

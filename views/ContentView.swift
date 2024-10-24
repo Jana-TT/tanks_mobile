@@ -9,33 +9,30 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        
         NavigationView {
             VStack {
-                Text("Begin by selecting a division to view tanks.")
-                    .padding()
-                
                 // NavigationLink for Facilities
                 NavigationLink(destination: twoContentView()) {
-                    Text("Facilities")
+                    Text("Division Name")
                         .font(.headline)
                         .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
+                        .background(Color.red)
+                        .foregroundColor(.black)
                         .cornerRadius(8)
                 }
                 
-                // NavigationLink for Tanks
                 NavigationLink(destination: TanksContentView()) {
-                    Text("Tanks")
+                    Text("pp Name")
                         .font(.headline)
                         .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
+                        .background(Color.red)
+                        .foregroundColor(.black)
                         .cornerRadius(8)
                 }
+                Text("Begin by selecting a division to view tanks")
+                    .padding()
             }
-            .padding()
+            .navigationTitle("iTanks")  // Optional: Add a title to the navigation bar
         }
     }
 }
@@ -46,3 +43,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
