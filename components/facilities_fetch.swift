@@ -27,7 +27,9 @@ struct FacilityData: Codable {
 struct twoContentView: View {
     @State private var facilities: [Facility] = []
     @State private var errorMessage: String?
-    
+    @State private var divisionNames: [String] = []
+    @State private var selectedDivision: String = "" 
+
     var body: some View {
         NavigationView {
             VStack {
@@ -37,14 +39,25 @@ struct twoContentView: View {
                 } else if facilities.isEmpty {
                     Text("Loading...")
                 } else {
-                    List(facilities) { facility in
-                        VStack(alignment: .leading) {
-                            Text(facility.facility_name)
-                                .font(.headline)
-                            Text(facility.facility_name)
-                                .font(.headline);
-                            Text(facility.property_id)
-                                .font(.headline)                        }
+                    VStack {
+                        Picker("Select a Division", selection: $selectedDivision) {
+                            ForEach(divisionNames, id: \.self) { division in
+                                Text(division).tag(division)
+                            }
+                        }
+                        .pickerStyle(MenuPickerStyle()) // Dropdown style
+                        .padding()
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(8)
+                        
+                        List(facilities.filter { selectedDivision.isEmpty || $0.division_name == selectedDivision }) { facility in
+                            VStack(alignment: .leading) {
+                                Text(facility.facility_name)
+                                    .font(.headline)
+                                Text(facility.property_id)
+                                    .font(.subheadline)
+                            }
+                        }
                     }
                 }
             }
@@ -56,6 +69,7 @@ struct twoContentView: View {
             }
         }
     }
+
     
     func facilitiesFetch() async {
         // Creating the URL object
@@ -63,32 +77,35 @@ struct twoContentView: View {
             errorMessage = "Invalid URL"
             return
         }
-        
+
         var req = URLRequest(url: url)
         req.httpMethod = "POST"
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
+
         do {
             let (data, response) = try await URLSession.shared.data(for: req)
-            
+
             // Checking for a valid HTTP response
             if let httpResponse = response as? HTTPURLResponse {
                 print("Response status code: \(httpResponse.statusCode)")
             }
-            
-            // Decode the JSON data into FacilityData
+
+            // Decoding the JSON data
             let decodedData = try JSONDecoder().decode(FacilityData.self, from: data)
-            
-            // Update the facilities state directly
+
+            // Update the facilities state
             facilities = decodedData.facilities
+
+            //unique division nmaes
+            divisionNames = Array(Set(facilities.map { $0.division_name })).sorted()
+
         } catch {
-            // Handling error
+            
             errorMessage = error.localizedDescription
             print("Error: \(error.localizedDescription)")
         }
     }
 }
-
 
 // Preview
 #Preview {

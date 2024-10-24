@@ -11,6 +11,26 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		CDD23D042CC9B93B007C5133 /* views */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = views;
+			sourceTree = "<group>";
+		};
+		CDD23D072CC9B99E007C5133 /* components */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = components;
+			sourceTree = "<group>";
+		};
+		CDD23D082CC9BA25007C5133 /* models */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = models;
+			sourceTree = "<group>";
+		};
+		CDD23D092CC9BA31007C5133 /* api */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = api;
+			sourceTree = "<group>";
+		};
 		CDD842292CC961B000984BAF /* iTanks */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = iTanks;
@@ -34,6 +54,10 @@
 			children = (
 				CDD842292CC961B000984BAF /* iTanks */,
 				CDD842282CC961B000984BAF /* Products */,
+				CDD23D042CC9B93B007C5133 /* views */,
+				CDD23D072CC9B99E007C5133 /* components */,
+				CDD23D082CC9BA25007C5133 /* models */,
+				CDD23D092CC9BA31007C5133 /* api */,
 			);
 			sourceTree = "<group>";
 		};
@@ -61,6 +85,10 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				CDD23D042CC9B93B007C5133 /* views */,
+				CDD23D072CC9B99E007C5133 /* components */,
+				CDD23D082CC9BA25007C5133 /* models */,
+				CDD23D092CC9BA31007C5133 /* api */,
 				CDD842292CC961B000984BAF /* iTanks */,
 			);
 			name = iTanks;

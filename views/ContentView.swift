@@ -9,12 +9,10 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
+        
         NavigationView {
             VStack {
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                    .foregroundStyle(.tint)
-                Text("Hello, world pp ffffff!")
+                Text("Begin by selecting a division to view tanks.")
                     .padding()
                 
                 // NavigationLink for Facilities
