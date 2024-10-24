@@ -31,8 +31,10 @@ struct TankCardView: View {
             
             VStack(alignment: .leading) {
                 Text("\(tank.tank_type) Tank #\(tank.tank_number)")
-                    .foregroundColor(tank.tank_type == "Oil" ? Color.green : Color.blue)
                     .bold()
+                
+                Text("Capacity: " + "\(tank.capacity)")
+                    .font(.caption)
             
                 if let inchesToESD = tank.inches_to_esd {
                     Text("\(inches_to_feet(inches: inchesToESD)) to ESD")
@@ -42,7 +44,7 @@ struct TankCardView: View {
                         .foregroundColor(.white)
                         .background(
                             RoundedRectangle(cornerRadius: 5)
-                                .fill(Color.blue.opacity(0.5))
+                                .fill(Color.blue.opacity(0.6))
                         )
                 } else {
                     Text("")
@@ -54,11 +56,16 @@ struct TankCardView: View {
             HStack(spacing: 30) {
                 VStack {
                     Text("\(inches_to_feet(inches: tank.level))")
+                        .foregroundColor(tank.tank_type == "Oil" ? Color.green : Color.blue)
                     Text("Level")
+                        .foregroundColor(tank.tank_type == "Oil" ? Color.green : Color.blue)
                 }
+                
                 VStack {
-                    Text("\(tank.capacity)")
+                    Text("\(tank.volume)")
+                        .foregroundColor(tank.tank_type == "Oil" ? Color.green : Color.blue)
                     Text("BBL")
+                        .foregroundColor(tank.tank_type == "Oil" ? Color.green : Color.blue)
                 }
             }
         }

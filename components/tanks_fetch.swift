@@ -31,7 +31,7 @@
         let tank_types: [String]
     }
 
-    struct TanksContentView:     View {
+    struct TanksContentView: View {
         @State private var tanks: [Tank] = []
         @State private var errorMessage: String?
 
