@@ -8,6 +8,7 @@
 import SwiftUI
 import Foundation
 
+// Facility and FacilityData structures
 struct Facility: Codable, Identifiable {
     let id = UUID()
     let property_id: String
@@ -22,7 +23,7 @@ struct FacilityData: Codable {
     let facilities: [Facility]
 }
 
-struct twoContentView: View {
+struct divisionView: View {
     @State private var facilities: [Facility] = []
     @State private var errorMessage: String?
     @State private var divisionNames: [String] = []
@@ -39,9 +40,10 @@ struct twoContentView: View {
                     Text("Loading...")
                 } else {
                     VStack {
+                        // Division Picker
                         Picker("Select a Division", selection: $selectedDivision) {
                             ForEach(divisionNames, id: \.self) { division in
-                                Text(division).tag(division) // Tag added for selection
+                                Text(division).tag(division)
                             }
                         }
                         .pickerStyle(MenuPickerStyle())
@@ -49,11 +51,11 @@ struct twoContentView: View {
                         .background(Color.gray.opacity(0.1))
                         .cornerRadius(8)
                         .onChange(of: selectedDivision) { newValue in
-                            filteredPropertyIds = facilities.filter{$0.division_name == newValue}.map{$0.property_id}
+                            filteredPropertyIds = facilities
+                                .filter { $0.division_name == newValue }
+                                .map { $0.property_id }
                         }
                         
-                        Text("pp" + "\(filteredPropertyIds)")
-
                         if !filteredPropertyIds.isEmpty {
                             TanksContentView(property_ids: filteredPropertyIds)
                         } else {
@@ -63,7 +65,7 @@ struct twoContentView: View {
                     }
                 }
             }
-            .navigationTitle(selectedDivision)
+            
             .onAppear {
                 Task {
                     await facilitiesFetch()
@@ -72,9 +74,10 @@ struct twoContentView: View {
         }
     }
 
+    // Fetch facility data
     func facilitiesFetch() async {
         let url = URL(string: "https://tanks-api.wolfeydev.com/facilities")!
-
+        
         var req = URLRequest(url: url)
         req.httpMethod = "POST"
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")

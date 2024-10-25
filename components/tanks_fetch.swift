@@ -32,7 +32,7 @@ struct RequestPayload: Codable {
 }
 
 struct TanksContentView: View {
-    let property_ids: [String]  
+    let property_ids: [String]
     @State private var tanks: [Tank] = []
     @State private var errorMessage: String?
 
@@ -44,6 +44,7 @@ struct TanksContentView: View {
             } else if tanks.isEmpty {
                 Text("Loading...")
             } else {
+                // List of my tank cards
                 List(tanks) { tank in
                     VStack(alignment: .leading) {
                         TankCardView(tank: tank)
@@ -52,13 +53,20 @@ struct TanksContentView: View {
             }
         }
         .onAppear {
+            // Fetch the tanks when the view appears
             Task {
                 await tanksFetch(property_ids: property_ids)
             }
         }
+        .onChange(of: property_ids) { newValue in
+            // Fetch the tanks when property_ids changes
+            Task {
+                await tanksFetch(property_ids: newValue)
+            }
+        }
     }
 
-    // Fetch tanks based on property IDs
+    // Fetch tanks based on property id
     func tanksFetch(property_ids: [String]) async {
         let url = URL(string: "https://tanks-api.wolfeydev.com/tanks")!
         let payload = RequestPayload(property_ids: property_ids, tank_types: ["Oil", "Water"])

@@ -11,8 +11,8 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
-                // NavigationLink for Facilities
-                NavigationLink(destination: twoContentView()) {
+    
+                NavigationLink(destination: divisionView()) {
                     Text("Division Name")
                         .font(.headline)
                         .padding()
@@ -25,8 +25,8 @@ struct ContentView: View {
                 Text("Begin by selecting a division to view tanks")
                     .padding()
             }
-            .navigationTitle("iTanks")  // Optional: Add a title to the navigation bar
-        }
+              
+            }
     }
 }
 
