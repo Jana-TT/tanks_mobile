@@ -5,6 +5,13 @@
 //  Created by Jana Tahan  on 10/23/24.
 //
 
+//
+//  facilities_fetch.swift
+//  iTanks
+//
+//  Created by Jana Tahan  on 10/23/24.
+//
+
 import SwiftUI
 import Foundation
 
@@ -57,7 +64,7 @@ struct divisionView: View {
                         }
                         
                         if !filteredPropertyIds.isEmpty {
-                            TanksContentView(property_ids: filteredPropertyIds)
+                            TanksContentView(property_ids: filteredPropertyIds, facilities: facilities)
                         } else {
                             Text("Please select a division to view the tanks.")
                                 .padding()
@@ -96,5 +103,13 @@ struct divisionView: View {
         } catch {
             errorMessage = error.localizedDescription
         }
+    }
+}
+
+
+//Preview
+struct divisionView_preview: PreviewProvider {
+    static var previews: some View {
+        divisionView()
     }
 }

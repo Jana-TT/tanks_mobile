@@ -21,6 +21,9 @@ struct ContentView: View {
                         .cornerRadius(8)
                 }
                 
+                Menu("Division Name") {
+                    divisionView()
+                }
 
                 Text("Begin by selecting a division to view tanks")
                     .padding()

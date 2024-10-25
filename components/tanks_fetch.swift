@@ -33,8 +33,13 @@ struct RequestPayload: Codable {
 
 struct TanksContentView: View {
     let property_ids: [String]
+    let facilities: [Facility]
     @State private var tanks: [Tank] = []
     @State private var errorMessage: String?
+    
+    var groupedTanks: [String: [Tank]] {
+        Dictionary(grouping: tanks.filter { property_ids.contains($0.property_id) }) { $0.property_id }}
+        //yields this structure: "A": [Tank(property_id: "A", ...), Tank(property_id: "A", ...)]
 
     var body: some View {
         VStack {
@@ -44,10 +49,15 @@ struct TanksContentView: View {
             } else if tanks.isEmpty {
                 Text("Loading...")
             } else {
-                // List of my tank cards
-                List(tanks) { tank in
-                    VStack(alignment: .leading) {
-                        TankCardView(tank: tank)
+                List {
+                    ForEach(facilities.filter { property_ids.contains($0.property_id) }) { facility in
+                        if let facilityTanks = groupedTanks[facility.property_id] {
+                            Section(header: Text(facility.facility_name).bold().font(.system(size: 17)).foregroundColor(.gray)) {
+                                ForEach(facilityTanks) { tank in
+                                    TankCardView(tank: tank)
+                                }
+                            }
+                        }
                     }
                 }
             }
