@@ -21,14 +21,7 @@ struct ContentView: View {
                         .cornerRadius(8)
                 }
                 
-                NavigationLink(destination: TanksContentView()) {
-                    Text("pp Name")
-                        .font(.headline)
-                        .padding()
-                        .background(Color.red)
-                        .foregroundColor(.black)
-                        .cornerRadius(8)
-                }
+
                 Text("Begin by selecting a division to view tanks")
                     .padding()
             }
@@ -43,4 +36,3 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-

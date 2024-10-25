@@ -8,9 +8,8 @@
 import SwiftUI
 import Foundation
 
-// Define the Facility and FacilityData types
 struct Facility: Codable, Identifiable {
-    let id = UUID() // For SwiftUI Identifiable conformance
+    let id = UUID()
     let property_id: String
     let division_name: String
     let division_id: Int
@@ -23,12 +22,12 @@ struct FacilityData: Codable {
     let facilities: [Facility]
 }
 
-// Define the view
 struct twoContentView: View {
     @State private var facilities: [Facility] = []
     @State private var errorMessage: String?
     @State private var divisionNames: [String] = []
-    @State private var selectedDivision: String = "" 
+    @State private var selectedDivision: String = ""
+    @State private var filteredPropertyIds: [String] = []
 
     var body: some View {
         NavigationView {
@@ -42,24 +41,29 @@ struct twoContentView: View {
                     VStack {
                         Picker("Select a Division", selection: $selectedDivision) {
                             ForEach(divisionNames, id: \.self) { division in
-                                Text(division).tag(division)
+                                Text(division).tag(division) // Tag added for selection
                             }
                         }
-                        .pickerStyle(MenuPickerStyle()) // Dropdown style
+                        .pickerStyle(MenuPickerStyle())
                         .padding()
                         .background(Color.gray.opacity(0.1))
                         .cornerRadius(8)
-                        
-                        Menu("Division Name") {
-                            ForEach(divisionNames, id: \.self) {
-                                division in Text(division).tag(division)
-                            }
+                        .onChange(of: selectedDivision) { newValue in
+                            filteredPropertyIds = facilities.filter{$0.division_name == newValue}.map{$0.property_id}
                         }
                         
+                        Text("pp" + "\(filteredPropertyIds)")
+
+                        if !filteredPropertyIds.isEmpty {
+                            TanksContentView(property_ids: filteredPropertyIds)
+                        } else {
+                            Text("Please select a division to view the tanks.")
+                                .padding()
+                        }
                     }
                 }
             }
-            .navigationTitle("Facilities")
+            .navigationTitle(selectedDivision)
             .onAppear {
                 Task {
                     await facilitiesFetch()
@@ -68,13 +72,8 @@ struct twoContentView: View {
         }
     }
 
-    
     func facilitiesFetch() async {
-        // Creating the URL object
-        guard let url = URL(string: "https://tanks-api.wolfeydev.com/facilities") else {
-            errorMessage = "Invalid URL"
-            return
-        }
+        let url = URL(string: "https://tanks-api.wolfeydev.com/facilities")!
 
         var req = URLRequest(url: url)
         req.httpMethod = "POST"
@@ -83,29 +82,16 @@ struct twoContentView: View {
         do {
             let (data, response) = try await URLSession.shared.data(for: req)
 
-            // Checking for a valid HTTP response
             if let httpResponse = response as? HTTPURLResponse {
                 print("Response status code: \(httpResponse.statusCode)")
             }
 
-            // Decoding the JSON data
             let decodedData = try JSONDecoder().decode(FacilityData.self, from: data)
-
-            // Update the facilities state
             facilities = decodedData.facilities
-
-            //unique division nmaes
             divisionNames = Array(Set(facilities.map { $0.division_name })).sorted()
 
         } catch {
-            
             errorMessage = error.localizedDescription
-            print("Error: \(error.localizedDescription)")
         }
     }
-}
-
-// Preview
-#Preview {
-    twoContentView()
 }
