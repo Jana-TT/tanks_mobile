@@ -41,7 +41,7 @@ struct PercentFullView: View {
                     .fill(tank.tank_type == "Oil" ? Color.green : Color.blue)
                     .frame(height: 70 * CGFloat(capped_percent) / 100)
                     .clipShape(RoundedCorner(radius: 15, corners: [.bottomLeft, .bottomRight]))
-                    .clipShape(RoundedCorner(radius: 3, corners: [.topLeft, .topRight]))
+                    .clipShape(RoundedCorner(radius: 8, corners: [.topLeft, .topRight]))
                     .frame(maxWidth: .infinity)
             }
 

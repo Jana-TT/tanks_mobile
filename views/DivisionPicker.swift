@@ -6,27 +6,61 @@
 //
 
 import SwiftUI
-import Foundation
 
-struct DivisionPicker: View {
-    @Binding var selectedDivision: String
-    let divisionNames: [String]
-    
+struct DivisionView: View {
+    @State private var selectedDivision: String = ""
+    @State private var divisionNames: [String] = []
+    @State private var facilities: [Facility] = []
+    @State private var errorMessage: String?
+
     var body: some View {
-        VStack {
-            Text("Division name")
-                .font(.caption)
-                .padding(.top)
-            
-            Picker("Select a Division", selection: $selectedDivision) {
-                ForEach(divisionNames, id: \.self) { division in
-                    Text(division).tag(division)
+        NavigationView {
+            VStack {
+                Spacer()
+
+                if let errorMessage = errorMessage {
+                    Text("Error: \(errorMessage)")
+                        .foregroundColor(.red)
+                        .multilineTextAlignment(.center)
+                        .padding(.bottom, 20)
+                } else {
+                    Text("Begin by selecting a division to view tanks")
+                        .font(.system(size: 18))
+                        .fontWeight(.heavy)
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 100)
+                        .padding(.bottom, 30)
+
+                    List(divisionNames, id: \.self) { division in
+                        NavigationLink(
+                            destination: MainView(selectedDivision: division, facilities: facilities)
+                        ) {
+                            Text(division)
+                                .padding(8)
+                        }
+                    }
+                    .listStyle(PlainListStyle())
+                }
+
+                Spacer()
+            }
+            .padding()
+            .onAppear {
+                Task {
+                    do {
+                        facilities = try await FacilityFetcher.fetchFacilities()
+                        divisionNames = Array(Set(facilities.map { $0.division_name })).sorted()
+                    } catch {
+                        errorMessage = error.localizedDescription
+                    }
                 }
             }
-            .pickerStyle(MenuPickerStyle())
-            .padding()
-            .background(Color.gray.opacity(0.1))
-            .cornerRadius(8)
         }
+    }
+}
+
+struct DivisionPickerView_Previews: PreviewProvider {
+    static var previews: some View {
+        DivisionView()
     }
 }

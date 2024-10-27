@@ -19,7 +19,7 @@ struct TanksContentView: View {
 
     var groupedTanks: [String: [Tank]] {
         Dictionary(grouping: tanks.filter { property_ids.contains($0.property_id) }) { $0.property_id }
-    }
+    } // all property ids together
 
     var body: some View {
         List {

@@ -21,11 +21,6 @@
 			path = components;
 			sourceTree = "<group>";
 		};
-		CDD23D082CC9BA25007C5133 /* models */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = models;
-			sourceTree = "<group>";
-		};
 		CDD23D092CC9BA31007C5133 /* api */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = api;
@@ -56,7 +51,6 @@
 				CDD842282CC961B000984BAF /* Products */,
 				CDD23D042CC9B93B007C5133 /* views */,
 				CDD23D072CC9B99E007C5133 /* components */,
-				CDD23D082CC9BA25007C5133 /* models */,
 				CDD23D092CC9BA31007C5133 /* api */,
 			);
 			sourceTree = "<group>";
@@ -87,7 +81,6 @@
 			fileSystemSynchronizedGroups = (
 				CDD23D042CC9B93B007C5133 /* views */,
 				CDD23D072CC9B99E007C5133 /* components */,
-				CDD23D082CC9BA25007C5133 /* models */,
 				CDD23D092CC9BA31007C5133 /* api */,
 				CDD842292CC961B000984BAF /* iTanks */,
 			);
