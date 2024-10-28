@@ -34,6 +34,10 @@ struct DivisionView: View {
                     List(divisionNames, id: \.self) { division in
                         NavigationLink(
                             destination: MainView(selectedDivision: division, facilities: facilities)
+                                .onAppear {
+                                    selectedDivision = division
+                                    //print("Selected Division: \(selectedDivision)") 
+                                }
                         ) {
                             Text(division)
                                 .padding(8)
@@ -45,6 +49,8 @@ struct DivisionView: View {
                 Spacer()
             }
             .padding()
+            .navigationTitle(selectedDivision.isEmpty ? "Select Division" : selectedDivision)
+            .toolbar(.hidden)
             .onAppear {
                 Task {
                     do {

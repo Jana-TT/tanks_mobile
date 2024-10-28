@@ -17,15 +17,14 @@ struct MainView: View {
     
     var body: some View {
         VStack {
-            Text("Selected Division: \(selectedDivision)")
-                .font(.system(size: 16))
-                .bold()
+            
+            FuzzySearch(selectedDivision: selectedDivision, facilities: facilities)
             
             // Foreman filter
             let foremanNames = Array(Set(facilities
                 .filter { $0.division_name == selectedDivision }
                 .map { $0.foreman_name }))
-            
+
             HStack{
                 Text("Foreman:")
                     .font(.system(size: 16))
@@ -96,6 +95,7 @@ struct MainView: View {
                     .padding()
             }
         }
+
         .onAppear { //from my division view so TanksContentView has the filtered ids
             filteredPropertyIds = facilities
                 .filter { $0.division_name == selectedDivision }
