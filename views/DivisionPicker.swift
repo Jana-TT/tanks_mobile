@@ -23,7 +23,7 @@ struct DivisionView: View {
                         .foregroundColor(.red)
                         .multilineTextAlignment(.center)
                         .padding(.bottom, 20)
-                } else {
+                } else {    
                     Text("Begin by selecting a division to view tanks")
                         .font(.system(size: 18))
                         .fontWeight(.heavy)
@@ -33,7 +33,7 @@ struct DivisionView: View {
 
                     List(divisionNames, id: \.self) { division in
                         NavigationLink(
-                            destination: MainView(selectedDivision: division, facilities: facilities)
+                            destination: SearchView(selectedDivision: division, facilities: facilities)
                                 .onAppear {
                                     selectedDivision = division
                                     //print("Selected Division: \(selectedDivision)") 

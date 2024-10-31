@@ -6,9 +6,24 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		CDEBC2252CD1774E002D835C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CDEBC2202CD1774E002D835C /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		CDD842272CC961B000984BAF /* iTanks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTanks.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDEBC2202CD1774E002D835C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CDEBC2362CD17CCB002D835C /* Exceptions for "iTanks" folder in "iTanks" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = CDD842262CC961B000984BAF /* iTanks */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		CDD23D042CC9B93B007C5133 /* views */ = {
@@ -28,6 +43,9 @@
 		};
 		CDD842292CC961B000984BAF /* iTanks */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CDEBC2362CD17CCB002D835C /* Exceptions for "iTanks" folder in "iTanks" target */,
+			);
 			path = iTanks;
 			sourceTree = "<group>";
 		};
@@ -47,6 +65,7 @@
 		CDD8421E2CC961B000984BAF = {
 			isa = PBXGroup;
 			children = (
+				CDEBC2202CD1774E002D835C /* Assets.xcassets */,
 				CDD842292CC961B000984BAF /* iTanks */,
 				CDD842282CC961B000984BAF /* Products */,
 				CDD23D042CC9B93B007C5133 /* views */,
@@ -130,6 +149,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDEBC2252CD1774E002D835C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +296,7 @@
 				DEVELOPMENT_TEAM = 6BC6H674Y3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iTanks/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -286,7 +307,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.janatahan.iTanks;
+				PRODUCT_BUNDLE_IDENTIFIER = com.janatahan.iTanks.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -305,6 +326,7 @@
 				DEVELOPMENT_TEAM = 6BC6H674Y3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iTanks/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -315,7 +337,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.janatahan.iTanks;
+				PRODUCT_BUNDLE_IDENTIFIER = com.janatahan.iTanks.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
