@@ -5,13 +5,6 @@
 //  Created by Jana Tahan  on 10/30/24.
 //
 
-//
-//  SearchView.swift
-//  iTanks
-//
-//  Created by Jana Tahan  on 10/30/24.
-//
-
 import SwiftUI
 
 struct SearchView: View {
