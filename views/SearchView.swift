@@ -16,7 +16,7 @@ struct SearchView: View {
     @State private var selectedForeman: String = ""
     @State private var selectedRoute: String = ""
     @State private var selectedFacility: String = ""
-    @FocusState private var isSearchFieldFocused: Bool
+    @FocusState private var isSearchFieldFocused: Bool //cursor
     
     var body: some View {
         VStack{
@@ -26,9 +26,24 @@ struct SearchView: View {
                 
                 TextField("Search by facility, foreman, or route", text: $searchText)
                     .onChange(of: searchText) { newValue in
-                        searchOptions()
+                        if !newValue.isEmpty {
+                            searchOptions()
+                        } else {
+                            filteredOptions = [] // hide options if search text is cleared
+                        }
                     }
                     .focused($isSearchFieldFocused)
+                
+                if !searchText.isEmpty {
+                    Button(action: {
+                        searchText = ""
+                        isSearchFieldFocused = true
+                    }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(.gray)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
             }
             .padding()
             
