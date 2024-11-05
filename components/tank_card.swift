@@ -23,49 +23,101 @@ func inches_to_feet(inches: Float?) -> String {
 }
 
 struct TankCardView: View {
+    let facility: Facility
     let tank: Tank
+    let selectedSort: Bool
     
     var body: some View {
-        HStack {
-            PercentFullView(tank: tank)
-            
-            VStack(alignment: .leading) {
-                Text("\(tank.tank_type) Tank #\(tank.tank_number)")
-                    .bold()
+        
+        if selectedSort {
+            HStack {
+                PercentFullView(tank: tank)
                 
-                Text("Capacity: " + "\(tank.capacity)")
-                    .font(.caption)
-            
-                if let inchesToESD = tank.inches_to_esd {
-                    Text("\(inches_to_feet(inches: inchesToESD)) to ESD")
-                        .padding(6)
-                        .font(.system(size: 14))
+                VStack(alignment: .leading) {
+
+                    Text("\(facility.facility_name)")
                         .bold()
-                        .foregroundColor(.white)
-                        .background(
-                            RoundedRectangle(cornerRadius: 5)
-                                .fill(Color.blue.opacity(0.6))
-                        )
-                } else {
-                    Text("")
+                    Text("\(tank.tank_type) Tank #\(tank.tank_number)")
+                        .bold()
+                    
+                    Text("Capacity: " + "\(tank.capacity)")
+                        .font(.caption)
+                    
+                    if let inchesToESD = tank.inches_to_esd {
+                        Text("\(inches_to_feet(inches: inchesToESD)) to ESD")
+                            .padding(6)
+                            .font(.system(size: 14))
+                            .bold()
+                            .foregroundColor(.white)
+                            .background(
+                                RoundedRectangle(cornerRadius: 5)
+                                    .fill(Color.blue.opacity(0.6))
+                            )
+                    } else {
+                        Text("")
+                    }
+                }
+                
+                Spacer()
+                
+                HStack(spacing: 30) {
+                    VStack {
+                        Text("\(inches_to_feet(inches: tank.level))")
+                            .foregroundColor(tank.tank_type == "Oil" ? Color.green : Color.blue)
+                        Text("Level")
+                            .foregroundColor(tank.tank_type == "Oil" ? Color.green : Color.blue)
+                    }
+                    
+                    VStack {
+                        Text("\(tank.volume)")
+                            .foregroundColor(tank.tank_type == "Oil" ? Color.green : Color.blue)
+                        Text("BBL")
+                            .foregroundColor(tank.tank_type == "Oil" ? Color.green : Color.blue)
+                    }
                 }
             }
-            
-            Spacer()
-            
-            HStack(spacing: 30) {
-                VStack {
-                    Text("\(inches_to_feet(inches: tank.level))")
-                        .foregroundColor(tank.tank_type == "Oil" ? Color.green : Color.blue)
-                    Text("Level")
-                        .foregroundColor(tank.tank_type == "Oil" ? Color.green : Color.blue)
+        } else {
+            HStack {
+                PercentFullView(tank: tank)
+                
+                VStack(alignment: .leading) {
+                    Text("\(tank.tank_type) Tank #\(tank.tank_number)")
+                        .bold()
+                    
+                    Text("Capacity: " + "\(tank.capacity)")
+                        .font(.caption)
+                    
+                    if let inchesToESD = tank.inches_to_esd {
+                        Text("\(inches_to_feet(inches: inchesToESD)) to ESD")
+                            .padding(6)
+                            .font(.system(size: 14))
+                            .bold()
+                            .foregroundColor(.white)
+                            .background(
+                                RoundedRectangle(cornerRadius: 5)
+                                    .fill(Color.blue.opacity(0.6))
+                            )
+                    } else {
+                        Text("")
+                    }
                 }
                 
-                VStack {
-                    Text("\(tank.volume)")
-                        .foregroundColor(tank.tank_type == "Oil" ? Color.green : Color.blue)
-                    Text("BBL")
-                        .foregroundColor(tank.tank_type == "Oil" ? Color.green : Color.blue)
+                Spacer()
+                
+                HStack(spacing: 30) {
+                    VStack {
+                        Text("\(inches_to_feet(inches: tank.level))")
+                            .foregroundColor(tank.tank_type == "Oil" ? Color.green : Color.blue)
+                        Text("Level")
+                            .foregroundColor(tank.tank_type == "Oil" ? Color.green : Color.blue)
+                    }
+                    
+                    VStack {
+                        Text("\(tank.volume)")
+                            .foregroundColor(tank.tank_type == "Oil" ? Color.green : Color.blue)
+                        Text("BBL")
+                            .foregroundColor(tank.tank_type == "Oil" ? Color.green : Color.blue)
+                    }
                 }
             }
         }

@@ -17,7 +17,11 @@ struct SearchView: View {
     @State private var selectedRoute: String = ""
     @State private var selectedFacility: String = ""
     @FocusState private var isSearchFieldFocused: Bool //cursor
+    
     @State private var sortedClicked: Bool = false
+    @State private var sortedLevel: Bool = false
+    @State private var sortedPercentFull: Bool = false
+    @State private var sortedESD: Bool = false
     
     var body: some View {
         VStack{
@@ -66,16 +70,35 @@ struct SearchView: View {
             }
             
             //palceholder for sorting
-            Button(action: {
-                sortedClicked = true
-                print("peepoo")
-            }) {
-                Text("press me")
+            HStack {
+                Button(action: {
+                    sortedClicked = true
+                    sortedLevel.toggle()
+                }) {
+                    Text("Level")
+                }
+                .padding(10)
+
+                Button(action: {
+                    sortedClicked = true
+                    sortedPercentFull.toggle()
+                }) {
+                    Text("Percent Full")
+                }
+                .padding(10)
+
+                Button(action: {
+                    sortedClicked = true
+                    sortedESD.toggle()
+                }) {
+                    Text("ESD")
+                }
+                .padding(10)
             }
             
             //render tanks
             if !filteredPropertyIds.isEmpty {
-                TanksContentView(property_ids: filteredPropertyIds, facilities: facilities, selectedForeman: selectedForeman, selectedRoute: selectedRoute, selectedFacility: selectedFacility, selectedSort: sortedClicked)
+                TanksContentView(property_ids: filteredPropertyIds, facilities: facilities, selectedForeman: selectedForeman, selectedRoute: selectedRoute, selectedFacility: selectedFacility, selectedSort: sortedClicked, sortedLevel: sortedLevel, sortedPercentFull: sortedPercentFull, sortedESD: sortedESD)
             }
             
         }
