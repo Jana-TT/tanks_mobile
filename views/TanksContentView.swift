@@ -14,6 +14,7 @@ struct TanksContentView: View {
     let selectedForeman: String
     let selectedRoute: String
     let selectedFacility: String
+    let selectedSort: Bool
     @State private var tanks: [Tank] = []
     @State private var errorMessage: String?
 
@@ -23,6 +24,13 @@ struct TanksContentView: View {
 
     var body: some View {
         List {
+            
+            if selectedSort {
+                Text("Sorting is enabled")
+                    .foregroundColor(.blue)
+            }
+
+            
             if let errorMessage = errorMessage {
                 Text("Error: \(errorMessage)")
                     .foregroundColor(.red)

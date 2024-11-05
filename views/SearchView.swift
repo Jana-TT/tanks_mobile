@@ -17,6 +17,7 @@ struct SearchView: View {
     @State private var selectedRoute: String = ""
     @State private var selectedFacility: String = ""
     @FocusState private var isSearchFieldFocused: Bool //cursor
+    @State private var sortedClicked: Bool = false
     
     var body: some View {
         VStack{
@@ -64,9 +65,17 @@ struct SearchView: View {
                 .listStyle(PlainListStyle())
             }
             
+            //palceholder for sorting
+            Button(action: {
+                sortedClicked = true
+                print("peepoo")
+            }) {
+                Text("press me")
+            }
+            
             //render tanks
             if !filteredPropertyIds.isEmpty {
-                TanksContentView(property_ids: filteredPropertyIds, facilities: facilities, selectedForeman: selectedForeman, selectedRoute: selectedRoute, selectedFacility: selectedFacility)
+                TanksContentView(property_ids: filteredPropertyIds, facilities: facilities, selectedForeman: selectedForeman, selectedRoute: selectedRoute, selectedFacility: selectedFacility, selectedSort: sortedClicked)
             }
             
         }
