@@ -45,6 +45,12 @@ struct SearchView: View {
                         }
                     } //reser the filters and put grouping back
                     .focused($isSearchFieldFocused)
+                    .onTapGesture {
+                        sortedClicked = false
+                        sortedLevel = false
+                        sortedPercentFull = false
+                        sortedESD = false
+                    }
                 
                 if !searchText.isEmpty {
                     Button(action: {
@@ -172,6 +178,11 @@ struct SearchView: View {
     private func selectionChosen(_ option: String) {
         isSearchFieldFocused = false // Set this to true on selection
         searchText = option // Show selected option in search bar
+        
+        sortedClicked = false
+        sortedLevel = false
+        sortedPercentFull = false
+        sortedESD = false
         
         if facilities.contains(where: { $0.foreman_name == option}) {
             selectedForeman = option
