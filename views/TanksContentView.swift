@@ -18,12 +18,13 @@ struct TanksContentView: View {
     let sortedLevel: Bool
     let sortedPercentFull: Bool
     let sortedESD: Bool
+    let sortOrder: SortOrder
     @State private var tanks: [Tank] = []
     @State private var errorMessage: String?
     
     @State private var selectedSortCriterion: String = "None"
 
-    // Step-by-step filtered list of tanks
+    // Step-by-step filtered list of tanks because swift cant handle complex stuff..
     var filteredTanks: [Tank] {
         let tanksMatchingProperties = tanks.filter { property_ids.contains($0.property_id) }
         
@@ -49,23 +50,23 @@ struct TanksContentView: View {
         return sortTanks(tanks: filtered)
     }
     
-    // Sort tanks based on criteria //ascedning
+    // Sort tanks based on criteria 
     private func sortTanks(tanks: [Tank]) -> [Tank] {
         var sortedTanks = tanks
         
         if sortedLevel {
-            sortedTanks.sort { (tank1, tank2) -> Bool in
-                return tank1.level < tank2.level
+            sortedTanks.sort { tank1, tank2 in
+                sortOrder == .ascending ? tank1.level < tank2.level : tank2.level < tank1.level
             }
         } else if sortedPercentFull {
-            sortedTanks.sort { (tank1, tank2) -> Bool in
-                return tank1.percent_full < tank2.percent_full
+            sortedTanks.sort { tank1, tank2 in
+                sortOrder == .ascending ? tank1.percent_full < tank2.percent_full : tank2.percent_full < tank1.percent_full
             }
         } else if sortedESD {
             sortedTanks.sort { (tank1, tank2) -> Bool in
                 switch (tank1.inches_to_esd, tank2.inches_to_esd) {
                 case (let esd1?, let esd2?): // Both are not nil
-                    return esd1 < esd2
+                    return sortOrder == .ascending ? esd1 < esd2 : esd2 < esd1
                 case (nil, let esd2?): // tank1 is nil, tank2 is not
                     return false // tank2 is less than tank1
                 case (let esd1?, nil): // tank2 is nil, tank1 is not

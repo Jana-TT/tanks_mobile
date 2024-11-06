@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+enum SortOrder {
+    case ascending
+    case descending
+}
+
 struct SearchView: View {
     let selectedDivision: String
     let facilities: [Facility]
@@ -23,6 +28,8 @@ struct SearchView: View {
     @State private var sortedPercentFull: Bool = false
     @State private var sortedESD: Bool = false
     
+    @State private var sortOrder: SortOrder = .descending
+    
     var body: some View {
         VStack{
             
@@ -36,7 +43,7 @@ struct SearchView: View {
                         } else {
                             filteredOptions = [] // hide options if search text is cleared
                         }
-                    }
+                    } //reser the filters and put grouping back
                     .focused($isSearchFieldFocused)
                 
                 if !searchText.isEmpty {
@@ -71,34 +78,70 @@ struct SearchView: View {
             
             //palceholder for sorting
             HStack {
+                // Level
                 Button(action: {
+                    if sortOrder == .ascending {
+                        sortOrder = .descending
+                    } else {
+                        sortOrder = .ascending
+                    }
+                    
                     sortedClicked = true
-                    sortedLevel.toggle()
+                    sortedLevel = true
+                    sortedPercentFull = false
+                    sortedESD = false
                 }) {
                     Text("Level")
+                    if sortedLevel {
+                        Image(systemName: sortOrder == .descending ? "arrowshape.down" : "arrowshape.up")
+                    }
                 }
-                .padding(10)
+                .padding()
 
+                // Percent Full
                 Button(action: {
+                    if sortOrder == .ascending {
+                        sortOrder = .descending
+                    } else {
+                        sortOrder = .ascending
+                    }
+                
                     sortedClicked = true
-                    sortedPercentFull.toggle()
+                    sortedPercentFull = true
+                    sortedLevel = false
+                    sortedESD = false
                 }) {
                     Text("Percent Full")
+                    if sortedPercentFull {
+                        Image(systemName: sortOrder == .descending ? "arrowshape.down" : "arrowshape.up")
+                    }
                 }
-                .padding(10)
+                .padding()
 
+                // ESD Sorting
                 Button(action: {
+                    if sortOrder == .ascending {
+                        sortOrder = .descending
+                    } else {
+                        sortOrder = .ascending
+                    }
+                    
                     sortedClicked = true
-                    sortedESD.toggle()
+                    sortedESD = true
+                    sortedLevel = false
+                    sortedPercentFull = false
                 }) {
                     Text("ESD")
+                    if sortedESD {
+                        Image(systemName: sortOrder == .descending ? "arrowshape.down" : "arrowshape.up")
+                    }
                 }
-                .padding(10)
+                .padding()
             }
             
             //render tanks
             if !filteredPropertyIds.isEmpty {
-                TanksContentView(property_ids: filteredPropertyIds, facilities: facilities, selectedForeman: selectedForeman, selectedRoute: selectedRoute, selectedFacility: selectedFacility, selectedSort: sortedClicked, sortedLevel: sortedLevel, sortedPercentFull: sortedPercentFull, sortedESD: sortedESD)
+                TanksContentView(property_ids: filteredPropertyIds, facilities: facilities, selectedForeman: selectedForeman, selectedRoute: selectedRoute, selectedFacility: selectedFacility, selectedSort: sortedClicked, sortedLevel: sortedLevel, sortedPercentFull: sortedPercentFull, sortedESD: sortedESD, sortOrder: sortOrder)
             }
             
         }
