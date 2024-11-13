@@ -10,6 +10,7 @@ import SwiftUI
 enum SortOrder {
     case ascending
     case descending
+    case reset
 }
 
 struct SearchView: View {
@@ -28,7 +29,7 @@ struct SearchView: View {
     @State private var sortedPercentFull: Bool = false
     @State private var sortedESD: Bool = false
     
-    @State private var sortOrder: SortOrder = .descending
+    @State private var sortOrder: SortOrder = .reset
     
     var body: some View {
         VStack{
@@ -86,63 +87,86 @@ struct SearchView: View {
             HStack {
                 // Level
                 Button(action: {
-                    if sortOrder == .ascending {
-                        sortOrder = .descending
-                    } else {
+                    if sortOrder == .descending {
                         sortOrder = .ascending
+                    } else if sortOrder == .ascending {
+                        sortOrder = .reset
+                        sortedClicked = false
+                        sortedLevel = false
+                    } else {
+                        sortOrder = .descending
+                        sortedClicked = true
+                        sortedLevel = true
+                        sortedPercentFull = false
+                        sortedESD = false
                     }
-                    
-                    sortedClicked = true
-                    sortedLevel = true
-                    sortedPercentFull = false
-                    sortedESD = false
                 }) {
                     Text("Level")
                     if sortedLevel {
-                        Image(systemName: sortOrder == .descending ? "arrowshape.down" : "arrowshape.up")
+                        if sortOrder == .descending {
+                            Image(systemName: "arrowshape.down")
+                        } else if sortOrder == .ascending {
+                            Image(systemName: "arrowshape.up")
+                        }
                     }
                 }
                 .padding()
 
                 // Percent Full
                 Button(action: {
-                    if sortOrder == .ascending {
-                        sortOrder = .descending
-                    } else {
+                    if sortOrder == .descending {
                         sortOrder = .ascending
+                    } else if sortOrder == .ascending {
+                        sortOrder = .reset
+                        sortedClicked = false
+                        sortedESD = false
+                    } else {
+                        sortOrder = .descending
+                        sortedClicked = true
+                        sortedPercentFull = true
+                        sortedLevel = false
+                        sortedESD = false
                     }
-                
-                    sortedClicked = true
-                    sortedPercentFull = true
-                    sortedLevel = false
-                    sortedESD = false
                 }) {
                     Text("Percent Full")
                     if sortedPercentFull {
-                        Image(systemName: sortOrder == .descending ? "arrowshape.down" : "arrowshape.up")
+                        if sortOrder == .descending {
+                            Image(systemName: "arrowshape.down")
+                        } else if sortOrder == .ascending {
+                            Image(systemName: "arrowshape.up")
+                        }
                     }
                 }
                 .padding()
 
                 // ESD Sorting
                 Button(action: {
-                    if sortOrder == .ascending {
-                        sortOrder = .descending
-                    } else {
+                    //sort order: descending -> ascending -> reset
+                    if sortOrder == .descending {
                         sortOrder = .ascending
+                    } else if sortOrder == .ascending {
+                        sortOrder = .reset
+                        sortedClicked = false 
+                        sortedESD = false
+                    } else {
+                        sortOrder = .descending
+                        sortedClicked = true
+                        sortedESD = true
+                        sortedLevel = false
+                        sortedPercentFull = false
                     }
-                    
-                    sortedClicked = true
-                    sortedESD = true
-                    sortedLevel = false
-                    sortedPercentFull = false
                 }) {
                     Text("ESD")
                     if sortedESD {
-                        Image(systemName: sortOrder == .descending ? "arrowshape.down" : "arrowshape.up")
+                        if sortOrder == .descending {
+                            Image(systemName: "arrowshape.down")
+                        } else if sortOrder == .ascending {
+                            Image(systemName: "arrowshape.up")
+                        }
                     }
                 }
                 .padding()
+
             }
             
             //render tanks
@@ -175,7 +199,7 @@ struct SearchView: View {
     }
     
     //selection & filter by selected
-    private func selectionChosen(_ option: String) {
+    private func selectionChosen(_ option: String) { //
         isSearchFieldFocused = false // Set this to true on selection
         searchText = option // Show selected option in search bar
         
