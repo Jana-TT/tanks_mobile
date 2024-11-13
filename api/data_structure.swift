@@ -43,3 +43,19 @@ struct RequestPayload: Codable {
     let property_ids: [String]
     let tank_types: [String]
 }
+
+struct Timeseries: Codable {
+    let tank_metric: String
+    let tank_type: String
+    let uom: String
+    let timestamps: [Date]
+    let values: [Float]
+}
+
+struct TimeseriesData: Codable {
+    let timeseries: [Timeseries]
+}
+
+struct RequestPayloadTS: Codable {
+    let source_key: [String]
+}

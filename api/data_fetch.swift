@@ -49,3 +49,25 @@ struct TanksFetcher {
     }
 }
 
+struct TimeseriesFetcher {
+    static func timeseries(source_key: [String]) async throws -> [Timeseries] {
+        let url = URL(string: "https://tanks-api.wolfeydev.com/tanks_timestamps")!
+        let payload = RequestPayloadTS(source_key: source_key)
+        
+        var req = URLRequest(url: url)
+        req.httpMethod = "POST"
+        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let jsonData = try JSONEncoder().encode(payload)
+        req.httpBody = jsonData
+        
+        let (data, response) = try await URLSession.shared.data(for: req)
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw URLError(.badServerResponse)
+        }
+        
+        let decodedData = try JSONDecoder().decode(TimeseriesData.self, from: data)
+        return decodedData.timeseries
+    }
+}
