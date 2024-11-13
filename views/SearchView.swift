@@ -207,6 +207,7 @@ struct SearchView: View {
         sortedLevel = false
         sortedPercentFull = false
         sortedESD = false
+        sortOrder = .reset
         
         if facilities.contains(where: { $0.foreman_name == option}) {
             selectedForeman = option
