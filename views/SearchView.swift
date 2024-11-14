@@ -22,6 +22,7 @@ struct SearchView: View {
     @State private var selectedForeman: String = ""
     @State private var selectedRoute: String = ""
     @State private var selectedFacility: String = ""
+    @State private var filteredSourceKeys: [String] = [] //source key for chart data
     @FocusState private var isSearchFieldFocused: Bool //cursor
     
     @State private var sortedClicked: Bool = false
@@ -44,7 +45,7 @@ struct SearchView: View {
                         } else {
                             filteredOptions = [] // hide options if search text is cleared
                         }
-                    } //reser the filters and put grouping back
+                    } //reset the filters and put grouping back
                     .focused($isSearchFieldFocused)
                     .onTapGesture {
                         sortedClicked = false
@@ -259,4 +260,15 @@ struct SearchView: View {
             .map { $0.property_id }
     }
     
+    //source_keys current edit
+    private func filterSourceKeys() {
+        filteredSourceKeys = facilities
+            .filter { facility in
+                facility.division_name == selectedDivision &&
+                (facility.foreman_name == selectedForeman || selectedForeman.isEmpty) &&
+                (facility.route_name == selectedRoute || selectedRoute.isEmpty) &&
+                (facility.facility_name == selectedFacility || selectedFacility.isEmpty)
+            }
+            .map { $0.property_id }
+    }
 }
