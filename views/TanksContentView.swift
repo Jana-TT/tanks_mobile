@@ -22,35 +22,18 @@ struct TanksContentView: View {
     @State private var tanks: [Tank] = []
     @State private var errorMessage: String?
     
-    @State private var selectedSortCriterion: String = "None"
-
-    // Step-by-step filtered list of tanks because swift cant handle complex stuff...
+    //filtering my tanks. !. meaning it will never be nil
     var filteredTanks: [Tank] {
-        let tanksMatchingProperties = tanks.filter { property_ids.contains($0.property_id) }
-        
-        let tanksMatchingForeman = selectedForeman.isEmpty
-            ? tanksMatchingProperties
-            : tanksMatchingProperties.filter { tank in
-                facilities.first(where: { $0.property_id == tank.property_id })?.foreman_name == selectedForeman
-            }
-        
-        let tanksMatchingRoute = selectedRoute.isEmpty
-            ? tanksMatchingForeman
-            : tanksMatchingForeman.filter { tank in
-                facilities.first(where: { $0.property_id == tank.property_id })?.route_name == selectedRoute
-            }
-        
-        let filtered = selectedFacility.isEmpty
-            ? tanksMatchingRoute
-            : tanksMatchingRoute.filter { tank in
-                facilities.first(where: { $0.property_id == tank.property_id })?.facility_name == selectedFacility
-            }
-        
-        // Sorting based on the selected
+        let filtered = tanks.filter { tank in
+            property_ids.contains(tank.property_id) &&
+            (selectedForeman.isEmpty || facilities.first(where: { $0.property_id == tank.property_id })!.foreman_name == selectedForeman) &&
+            (selectedRoute.isEmpty || facilities.first(where: {$0.property_id == tank.property_id})!.route_name == selectedRoute) &&
+            (selectedFacility.isEmpty || facilities.first(where: {$0.property_id == tank.property_id})!.facility_name == selectedFacility)
+        }
         return sortTanks(tanks: filtered)
     }
     
-    // Sort tanks based on sort feature
+    // Sort tanks based on sort, operating based on the filtered tanks
     private func sortTanks(tanks: [Tank]) -> [Tank] {
         var sortedTanks = tanks
         
@@ -76,7 +59,6 @@ struct TanksContentView: View {
                 }
             }
         }
-
         return sortedTanks
     }
 
