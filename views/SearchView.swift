@@ -170,7 +170,7 @@ struct SearchView: View {
 
             }
             
-            //render tanks
+            //render tanks to my tank content view
             if !filteredPropertyIds.isEmpty {
                 TanksContentView(property_ids: filteredPropertyIds, facilities: facilities, selectedForeman: selectedForeman, selectedRoute: selectedRoute, selectedFacility: selectedFacility, selectedSort: sortedClicked, sortedLevel: sortedLevel, sortedPercentFull: sortedPercentFull, sortedESD: sortedESD, sortOrder: sortOrder)
             }
@@ -180,7 +180,7 @@ struct SearchView: View {
             filteredPropertyIds = facilities
                 .filter { $0.division_name == selectedDivision }
                 .map{ $0.property_id }
-            filterFacilities()
+            filterPropertyIds()
         }
     }
     
@@ -195,7 +195,7 @@ struct SearchView: View {
             
         filteredOptions = uniqueOptions.filter { option in
             option.localizedCaseInsensitiveContains(searchText) || searchText.isEmpty
-        }
+        } //for "fuzzy" find
         .map { $0 } //back to an array
     }
     
@@ -224,7 +224,7 @@ struct SearchView: View {
             selectedFacility = option
         }
         
-        filterFacilities()
+        filterPropertyIds()
     }
     
     //color and icon based on type
@@ -249,7 +249,7 @@ struct SearchView: View {
     }
     
     //filter the facs
-    private func filterFacilities() {
+    private func filterPropertyIds() {
         filteredPropertyIds = facilities
             .filter { facility in
                 facility.division_name == selectedDivision &&
@@ -260,10 +260,10 @@ struct SearchView: View {
             .map { $0.property_id }
     }
     
-    //source_keys current edit
+    //source_keys edit for chart data //needs to be done under tanks fetch
     private func filterSourceKeys() {
         filteredSourceKeys = facilities
-            .filter { facility in
+            .filter { facility in			
                 facility.division_name == selectedDivision &&
                 (facility.foreman_name == selectedForeman || selectedForeman.isEmpty) &&
                 (facility.route_name == selectedRoute || selectedRoute.isEmpty) &&

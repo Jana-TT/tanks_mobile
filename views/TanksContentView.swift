@@ -24,7 +24,7 @@ struct TanksContentView: View {
     
     @State private var selectedSortCriterion: String = "None"
 
-    // Step-by-step filtered list of tanks because swift cant handle complex stuff..
+    // Step-by-step filtered list of tanks because swift cant handle complex stuff...
     var filteredTanks: [Tank] {
         let tanksMatchingProperties = tanks.filter { property_ids.contains($0.property_id) }
         
@@ -46,11 +46,11 @@ struct TanksContentView: View {
                 facilities.first(where: { $0.property_id == tank.property_id })?.facility_name == selectedFacility
             }
         
-        // Sorting based on the selected criteria
+        // Sorting based on the selected
         return sortTanks(tanks: filtered)
     }
     
-    // Sort tanks based on criteria 
+    // Sort tanks based on sort feature
     private func sortTanks(tanks: [Tank]) -> [Tank] {
         var sortedTanks = tanks
         
@@ -62,7 +62,7 @@ struct TanksContentView: View {
             sortedTanks.sort { tank1, tank2 in
                 sortOrder == .ascending ? tank1.percent_full < tank2.percent_full : tank2.percent_full < tank1.percent_full
             }
-        } else if sortedESD {
+        } else if sortedESD { //because ESD is an optional
             sortedTanks.sort { (tank1, tank2) -> Bool in
                 switch (tank1.inches_to_esd, tank2.inches_to_esd) {
                 case (let esd1?, let esd2?): // Both are not nil
@@ -80,7 +80,7 @@ struct TanksContentView: View {
         return sortedTanks
     }
 
-    // Grouped tanks by property ID for the grouped view
+    // Grouped tanks by property ID for the grouped fac view
     var groupedTanks: [String: [Tank]] {
         Dictionary(grouping: filteredTanks) { $0.property_id }
     }
