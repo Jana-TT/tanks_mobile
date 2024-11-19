@@ -84,10 +84,13 @@ struct SearchView: View {
                 .listStyle(PlainListStyle())
             }
             
-            //palceholder for sorting
+            //placeholder for sorting
             HStack {
                 // Level
                 Button(action: {
+                    sortedPercentFull = false
+                    sortedESD = false
+                    
                     if sortOrder == .descending {
                         sortOrder = .ascending
                     } else if sortOrder == .ascending {
