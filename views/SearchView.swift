@@ -88,20 +88,19 @@ struct SearchView: View {
             HStack {
                 // Level
                 Button(action: {
+                    sortedLevel = true
                     sortedPercentFull = false
                     sortedESD = false
-                    sortedClicked = false
+                    sortedClicked = true
                     
                     if sortOrder == .descending {
                         sortOrder = .ascending
-                        sortedClicked = true
                     } else if sortOrder == .ascending {
                         sortOrder = .reset
                         sortedClicked = false
                         sortedLevel = false
                     } else {
                         sortOrder = .descending
-                        sortedClicked = true
                         sortedLevel = true
                     }
                 }) {
@@ -118,20 +117,19 @@ struct SearchView: View {
 
                 // Percent Full
                 Button(action: {
+                    sortedPercentFull = true
                     sortedLevel = false
                     sortedESD = false
-                    sortedClicked = false
+                    sortedClicked = true
                     
                     if sortOrder == .descending {
                         sortOrder = .ascending
-                        sortedClicked = true
                     } else if sortOrder == .ascending {
                         sortOrder = .reset
                         sortedClicked = false
                         sortedPercentFull = false
                     } else {
                         sortOrder = .descending
-                        sortedClicked = true
                         sortedPercentFull = true
                     }
                 }) {
@@ -148,21 +146,20 @@ struct SearchView: View {
 
                 // ESD Sorting
                 Button(action: {
+                    sortedESD = true
                     sortedLevel = false
                     sortedPercentFull = false
-                    sortedClicked = false
+                    sortedClicked = true
                     
                     //sort order: descending -> ascending -> reset
                     if sortOrder == .descending {
                         sortOrder = .ascending
-                        sortedClicked = true
                     } else if sortOrder == .ascending {
                         sortOrder = .reset
                         sortedClicked = false
                         sortedESD = false
                     } else {
                         sortOrder = .descending
-                        sortedClicked = true
                         sortedESD = true
                     }
                 }) {
