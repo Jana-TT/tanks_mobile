@@ -254,7 +254,7 @@ struct SearchView: View {
         }
     }
     
-    //filter the facs
+    //filter the facs based on prop id
     private func filterPropertyIds() {
         filteredPropertyIds = facilities
             .filter { facility in

@@ -44,7 +44,8 @@ struct RequestPayload: Codable {
     let tank_types: [String]
 }
 
-struct Timeseries: Codable {
+struct Timeseries: Codable, Identifiable {
+    let id = UUID()
     let tank_metric: String
     let tank_type: String
     let uom: String
