@@ -90,9 +90,11 @@ struct SearchView: View {
                 Button(action: {
                     sortedPercentFull = false
                     sortedESD = false
+                    sortedClicked = false
                     
                     if sortOrder == .descending {
                         sortOrder = .ascending
+                        sortedClicked = true
                     } else if sortOrder == .ascending {
                         sortOrder = .reset
                         sortedClicked = false
@@ -101,8 +103,6 @@ struct SearchView: View {
                         sortOrder = .descending
                         sortedClicked = true
                         sortedLevel = true
-                        sortedPercentFull = false
-                        sortedESD = false
                     }
                 }) {
                     Text("Level")
@@ -118,18 +118,21 @@ struct SearchView: View {
 
                 // Percent Full
                 Button(action: {
+                    sortedLevel = false
+                    sortedESD = false
+                    sortedClicked = false
+                    
                     if sortOrder == .descending {
                         sortOrder = .ascending
+                        sortedClicked = true
                     } else if sortOrder == .ascending {
                         sortOrder = .reset
                         sortedClicked = false
-                        sortedESD = false
+                        sortedPercentFull = false
                     } else {
                         sortOrder = .descending
                         sortedClicked = true
                         sortedPercentFull = true
-                        sortedLevel = false
-                        sortedESD = false
                     }
                 }) {
                     Text("Percent Full")
@@ -145,19 +148,22 @@ struct SearchView: View {
 
                 // ESD Sorting
                 Button(action: {
+                    sortedLevel = false
+                    sortedPercentFull = false
+                    sortedClicked = false
+                    
                     //sort order: descending -> ascending -> reset
                     if sortOrder == .descending {
                         sortOrder = .ascending
+                        sortedClicked = true
                     } else if sortOrder == .ascending {
                         sortOrder = .reset
-                        sortedClicked = false 
+                        sortedClicked = false
                         sortedESD = false
                     } else {
                         sortOrder = .descending
                         sortedClicked = true
                         sortedESD = true
-                        sortedLevel = false
-                        sortedPercentFull = false
                     }
                 }) {
                     Text("ESD")
